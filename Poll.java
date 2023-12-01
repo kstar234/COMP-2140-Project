@@ -1,56 +1,73 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
 public class Poll {
-    private List<Question> questions;
-    private List<String> responses;
+    private static final int LOCATION_OPTIONS = 4;
+    private static final int DEPARTURE_TIME_OPTIONS = 6;
 
-    public Poll() {
-        this.questions = new ArrayList<>();
-        this.responses = new ArrayList<>();
+    private int[] locationCounts = new int[LOCATION_OPTIONS];
+    private int[] departureTimeCounts = new int[DEPARTURE_TIME_OPTIONS];
+
+    public void conductCombinedPoll() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Combined Poll:");
+        askLocationsPollQuestion();
+        askDepartureTimesPollQuestion();
+
+        System.out.println("Thank you for answering!\n");
     }
 
-    // Class methods
+    private void askLocationsPollQuestion() {
+        Scanner scanner = new Scanner(System.in);
 
-    // Add a question to the poll
-    public void addQuestion(Question question) {
-        questions.add(question);
+        System.out.println("Locations Poll Question:");
+        System.out.println("Which locations will you frequently travel to for the semester?");
+        System.out.println("1. Kingston");
+        System.out.println("2. Spanish Town");
+        System.out.println("3. Portmore");
+        System.out.println("4. Other");
+
+        int selectedOption = scanner.nextInt();
+        recordLocationResponse(selectedOption);
     }
 
-    // Delete a question from the poll
-    public void deleteQuestion(Question question) {
-        questions.remove(question);
+    private void askDepartureTimesPollQuestion() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Departure Times Poll Question:");
+        System.out.println("What times will you depart each day for the week?");
+        System.out.println("1. 6-7AM");
+        System.out.println("2. 7-8AM");
+        System.out.println("3. 8-9AM");
+        System.out.println("4. 9-10AM");
+        System.out.println("5. 10-11AM");
+        System.out.println("6. 11AM+");
+
+        int selectedOption = scanner.nextInt();
+        recordDepartureTimeResponse(selectedOption);
     }
 
-    // Display all questions in the poll
-    public void displayQuestions() {
-        for (Question question : questions) {
-            System.out.println(question.getText());
+    private void recordLocationResponse(int option) {
+        // Increment the count for the selected location option
+        if (option >= 1 && option <= LOCATION_OPTIONS) {
+            locationCounts[option - 1]++;
+        } else {
+            System.out.println("Invalid option. Response not recorded.");
         }
     }
 
-    // Record a response to the poll
-    public void recordResponse(String response) {
-        responses.add(response);
-    }
-
-    // Display all responses to the poll
-    public void displayResponses() {
-        for (String response : responses) {
-            System.out.println(response);
+    private void recordDepartureTimeResponse(int option) {
+        // Increment the count for the selected departure time option
+        if (option >= 1 && option <= DEPARTURE_TIME_OPTIONS) {
+            departureTimeCounts[option - 1]++;
+        } else {
+            System.out.println("Invalid option. Response not recorded.");
         }
     }
 
-    // Inner class representing a question
-    public static class Question {
-        private String text;
-
-        public Question(String text) {
-            this.text = text;
-        }
-
-        public String getText() {
-            return text;
-        }
+    public void printPollResults() {
+        // Print poll results as needed
+        // This could be similar to the seeResponses and generateReport methods in your existing code
+        // Use the locationCounts and departureTimeCounts arrays to display responses
     }
 }
