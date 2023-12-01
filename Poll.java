@@ -1,13 +1,75 @@
 import java.util.Scanner;
 
-public class Poll {
+public class Main {
     private static final int LOCATION_OPTIONS = 4;
     private static final int DEPARTURE_TIME_OPTIONS = 6;
 
-    private int[] locationCounts = new int[LOCATION_OPTIONS];
-    private int[] departureTimeCounts = new int[DEPARTURE_TIME_OPTIONS];
+    private static int[] locationCounts = new int[LOCATION_OPTIONS];
+    private static int[] departureTimeCounts = new int[DEPARTURE_TIME_OPTIONS];
 
-    public void conductCombinedPoll() {
+    public static void main(String[] args) {
+        User loggedInUser = LoginService.loginUser();
+
+        // Check if login was successful
+        if (loggedInUser != null) {
+            System.out.println("Welcome, " + loggedInUser.getUsername() + "!\n");
+
+            // Display menu options based on user type
+            mainMenu(loggedInUser);
+        } else {
+            System.out.println("Exiting program.");
+        }
+    }
+
+    private static void mainMenu(User loggedInUser) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Main Menu:");
+            System.out.println("1. Go to Poll");
+
+            // Display additional options for admin
+            if (loggedInUser.getUserType() == UserType.ADMIN) {
+                System.out.println("2. See Responses");
+                System.out.println("3. Generate Report");
+            }
+
+            System.out.println("4. Exit");
+
+            int option = scanner.nextInt();
+
+            switch (option) {
+                case 1:
+                    runCombinedPoll();
+                    break;
+                case 2:
+                    // Check if the user is admin before allowing access
+                    if (loggedInUser.getUserType() == UserType.ADMIN) {
+                        seeResponses();
+                    } else {
+                        System.out.println("You do not have permission to access this option.\n");
+                    }
+                    break;
+                case 3:
+                    // Check if the user is admin before allowing access
+                    if (loggedInUser.getUserType() == UserType.ADMIN) {
+                        generateReport();
+                    } else {
+                        System.out.println("You do not have permission to access this option.\n");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Exiting program.");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.\n");
+            }
+        }
+    }
+
+
+    private static void runCombinedPoll() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Combined Poll:");
@@ -17,7 +79,7 @@ public class Poll {
         System.out.println("Thank you for answering!\n");
     }
 
-    private void askLocationsPollQuestion() {
+    private static void askLocationsPollQuestion() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Locations Poll Question:");
@@ -31,7 +93,7 @@ public class Poll {
         recordLocationResponse(selectedOption);
     }
 
-    private void askDepartureTimesPollQuestion() {
+    private static void askDepartureTimesPollQuestion() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Departure Times Poll Question:");
@@ -47,7 +109,7 @@ public class Poll {
         recordDepartureTimeResponse(selectedOption);
     }
 
-    private void recordLocationResponse(int option) {
+    private static void recordLocationResponse(int option) {
         // Increment the count for the selected location option
         if (option >= 1 && option <= LOCATION_OPTIONS) {
             locationCounts[option - 1]++;
@@ -56,7 +118,7 @@ public class Poll {
         }
     }
 
-    private void recordDepartureTimeResponse(int option) {
+    private static void recordDepartureTimeResponse(int option) {
         // Increment the count for the selected departure time option
         if (option >= 1 && option <= DEPARTURE_TIME_OPTIONS) {
             departureTimeCounts[option - 1]++;
@@ -65,9 +127,149 @@ public class Poll {
         }
     }
 
-    public void printPollResults() {
-        // Print poll results as needed
-        // This could be similar to the seeResponses and generateReport methods in your existing code
-        // Use the locationCounts and departureTimeCounts arrays to display responses
+    private static void seeResponses() {
+        System.out.println("See Responses for Combined Poll:");
+
+        System.out.println("\nSee Responses for Locations:");
+
+        for (int i = 0; i < LOCATION_OPTIONS; i++) {
+            String optionLabel;
+            switch (i + 1) {
+                case 1:
+                    optionLabel = "Kingston";
+                    break;
+                case 2:
+                    optionLabel = "Spanish Town";
+                    break;
+                case 3:
+                    optionLabel = "Portmore";
+                    break;
+                case 4:
+                    optionLabel = "Other";
+                    break;
+                default:
+                    optionLabel = "Invalid Option";
+            }
+
+            System.out.println(optionLabel + ": " + locationCounts[i] + " responses");
+        }
+
+        System.out.println("\nSee Responses for Departure Times:");
+
+        for (int i = 0; i < DEPARTURE_TIME_OPTIONS; i++) {
+            String optionLabel;
+            switch (i + 1) {
+                case 1:
+                    optionLabel = "6-7AM";
+                    break;
+                case 2:
+                    optionLabel = "7-8AM";
+                    break;
+                case 3:
+                    optionLabel = "8-9AM";
+                    break;
+                case 4:
+                    optionLabel = "9-10AM";
+                    break;
+                case 5:
+                    optionLabel = "10-11AM";
+                    break;
+                case 6:
+                    optionLabel = "11AM+";
+                    break;
+                default:
+                    optionLabel = "Invalid Option";
+            }
+
+            System.out.println(optionLabel + ": " + departureTimeCounts[i] + " responses");
+        }
+
+        System.out.println();
+    }
+
+    private static void generateReport() {
+        System.out.println("Generate Report for Combined Poll:");
+
+        generateLocationReport();
+        generateDepartureTimeReport();
+    }
+
+    private static void generateLocationReport() {
+        System.out.println("\nGenerate Report for Locations:");
+
+        int totalLocationResponses = getTotalResponses(locationCounts);
+
+        for (int i = 0; i < LOCATION_OPTIONS; i++) {
+            String optionLabel;
+            switch (i + 1) {
+                case 1:
+                    optionLabel = "Kingston";
+                    break;
+                case 2:
+                    optionLabel = "Spanish Town";
+                    break;
+                case 3:
+                    optionLabel = "Portmore";
+                    break;
+                case 4:
+                    optionLabel = "Other";
+                    break;
+                default:
+                    optionLabel = "Invalid Option";
+            }
+
+            double percentage = calculatePercentage(locationCounts[i], totalLocationResponses);
+            System.out.println(optionLabel + ": " + percentage + "%");
+        }
+    }
+
+    private static void generateDepartureTimeReport() {
+        System.out.println("\nGenerate Report for Departure Times:");
+
+        int totalDepartureTimeResponses = getTotalResponses(departureTimeCounts);
+
+        for (int i = 0; i < DEPARTURE_TIME_OPTIONS; i++) {
+            String optionLabel;
+            switch (i + 1) {
+                case 1:
+                    optionLabel = "6-7AM";
+                    break;
+                case 2:
+                    optionLabel = "7-8AM";
+                    break;
+                case 3:
+                    optionLabel = "8-9AM";
+                    break;
+                case 4:
+                    optionLabel = "9-10AM";
+                    break;
+                case 5:
+                    optionLabel = "10-11AM";
+                    break;
+                case 6:
+                    optionLabel = "11AM+";
+                    break;
+                default:
+                    optionLabel = "Invalid Option";
+            }
+
+            double percentage = calculatePercentage(departureTimeCounts[i], totalDepartureTimeResponses);
+            System.out.println(optionLabel + ": " + percentage + "%");
+        }
+    }
+
+    private static int getTotalResponses(int[] counts) {
+        int total = 0;
+        for (int count : counts) {
+            total += count;
+        }
+        return total;
+    }
+
+    private static double calculatePercentage(int count, int total) {
+        if (total == 0) {
+            return 0.0;
+        }
+        return ((double) count / total) * 100;
     }
 }
