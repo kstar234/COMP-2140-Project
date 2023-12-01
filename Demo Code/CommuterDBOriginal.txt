@@ -1,0 +1,3 @@
+user123;user123@example.com;pass123;[]
+travelGuy;travelguy@mail.com;myPass321;[]
+adventure;adventure@email.com;secret123;[]

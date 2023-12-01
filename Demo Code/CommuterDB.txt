@@ -1,0 +1,3 @@
+user123;user123@example.com;pass123;[PM1001, PR1003]
+travelGuy;travelguy@mail.com;myPass321;[PW1002, PB1004]
+adventure;adventure@email.com;secret123;[PN1005, PR1003]

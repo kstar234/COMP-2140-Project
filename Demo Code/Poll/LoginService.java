@@ -6,7 +6,7 @@ public class LoginService {
     private static final String STUDENT_USERNAME = "student";
     private static final String STUDENT_PASSWORD = "uwimona";
 
-    public static PollUser loginUser() {
+    public static User loginUser() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter user type (admin/student): ");
@@ -23,7 +23,7 @@ public class LoginService {
         }
     }
 
-    private static PollUser loginAdmin() {
+    private static User loginAdmin() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter admin username: ");
@@ -34,14 +34,14 @@ public class LoginService {
 
         if (username.equals(ADMIN_USERNAME) && password.equals(ADMIN_PASSWORD)) {
             System.out.println("Admin login successful!\n");
-            return new PollUser(username, password, UserType.ADMIN);
+            return new User(username, password, UserType.ADMIN);
         } else {
             System.out.println("Invalid admin username or password. Please try again.\n");
             return null;
         }
     }
 
-    private static PollUser loginStudent() {
+    private static User loginStudent() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter student username: ");
@@ -52,7 +52,7 @@ public class LoginService {
 
         if (username.equals(STUDENT_USERNAME) && password.equals(STUDENT_PASSWORD)) {
             System.out.println("Student login successful!\n");
-            return new PollUser(username, password, UserType.STUDENT);
+            return new User(username, password, UserType.STUDENT);
         } else {
             System.out.println("Invalid student username or password. Please try again.\n");
             return null;

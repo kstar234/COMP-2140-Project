@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class PollMain {
+public class Main {
     private static final int LOCATION_OPTIONS = 4;
     private static final int DEPARTURE_TIME_OPTIONS = 6;
 
@@ -8,7 +8,7 @@ public class PollMain {
     private static int[] departureTimeCounts = new int[DEPARTURE_TIME_OPTIONS];
 
     public static void main(String[] args) {
-        PollUser loggedInUser = LoginService.loginUser();
+        User loggedInUser = LoginService.loginUser();
 
         // Check if login was successful
         if (loggedInUser != null) {
@@ -21,7 +21,7 @@ public class PollMain {
         }
     }
 
-    private static void mainMenu(PollUser loggedInUser) {
+    private static void mainMenu(User loggedInUser) {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {

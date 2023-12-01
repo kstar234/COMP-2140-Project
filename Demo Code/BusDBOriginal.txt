@@ -1,0 +1,5 @@
+PM 1001;Kingston to Ocho Rios;30;08:00:00:00;11:30:00:00;[]
+PW 1002;Montego Bay to Negril;25;09:30:00:00;11:00:00:00;[]
+PR 1003;Port Antonio to Kingston;20;10:45:00:00;01:15:00:00;[]
+PB 1004;Spanish Town to Mandeville;28;11:15:00:00;02:45:00:00;[]
+PN 1005;Ocho Rios to Montego Bay;35;12:30:00:00;03:45:00:00;[]
